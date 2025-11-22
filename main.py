@@ -6,7 +6,6 @@ BASE_DIR = Path(__file__).parent
 
 
 def run_estoque():
-    # tenta achar o executável do módulo C
     candidatos = [
         BASE_DIR / "estoque" / "ModuloEstoque",
         BASE_DIR / "estoque" / "ModuloEstoque.exe",
@@ -15,40 +14,21 @@ def run_estoque():
 
     if not exe:
         print("\n[ERRO] Executável do módulo ESTOQUE não encontrado.")
-        print("       Compile o C, ex.: gcc \"Modulo Estoque.c\" -o ModuloEstoque\n")
+        print("       Compile o C dentro da pasta estoque:")
+        print("       gcc ModuloEstoque.c -o ModuloEstoque\n")
         return
 
     print(f"\n[INFO] Executando módulo ESTOQUE: {exe}\n")
     subprocess.call([str(exe)])
 
 
-def run_financeiro():
-    script = BASE_DIR / "financeiro" / "finaceiro.py"
+def run_script(rel_path: str, nome: str):
+    script = BASE_DIR / rel_path
     if not script.exists():
-        print("\n[ERRO] Script financeiro/finaceiro.py não encontrado.\n")
+        print(f"\n[ERRO] Script {rel_path} não encontrado.\n")
         return
 
-    print(f"\n[INFO] Abrindo módulo FINANCEIRO: {script}\n")
-    subprocess.call([sys.executable, str(script)])
-
-
-def run_producao():
-    script = BASE_DIR / "producao" / "producao.py"
-    if not script.exists():
-        print("\n[ERRO] Script producao/producao.py não encontrado.\n")
-        return
-
-    print(f"\n[INFO] Abrindo módulo PRODUÇÃO: {script}\n")
-    subprocess.call([sys.executable, str(script)])
-
-
-def run_venda_faturamento():
-    script = BASE_DIR / "venda-faturamento" / "venda-fatutamento.py"
-    if not script.exists():
-        print("\n[ERRO] Script venda-faturamento/venda-fatutamento.py não encontrado.\n")
-        return
-
-    print(f"\n[INFO] Abrindo módulo VENDA / FATURAMENTO: {script}\n")
+    print(f"\n[INFO] Abrindo módulo {nome}: {script}\n")
     subprocess.call([sys.executable, str(script)])
 
 
@@ -65,11 +45,11 @@ def main():
         if opcao == "1":
             run_estoque()
         elif opcao == "2":
-            run_financeiro()
+            run_script("financeiro/finaceiro.py", "FINANCEIRO")
         elif opcao == "3":
-            run_producao()
+            run_script("producao/producao.py", "PRODUÇÃO")
         elif opcao == "4":
-            run_venda_faturamento()
+            run_script("venda-faturamento/venda-fatutamento.py", "VENDA / FATURAMENTO")
         elif opcao == "0":
             print("\nEncerrando sistema...\n")
             break

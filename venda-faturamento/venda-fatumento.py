@@ -10,13 +10,22 @@ def carregar_dados():
     try:
         with open(ARQUIVO, "r", encoding="utf-8") as f:
             for linha in f:
-                if ":" not in linha:
+                linha = linha.strip()
+                if not linha or ":" not in linha:
                     continue
                 chave, valor = linha.split(":", 1)
                 dados[chave.strip()] = valor.strip()
     except FileNotFoundError:
         dados["erro"] = f"Arquivo '{ARQUIVO}' não encontrado. Gere o estoque no módulo C."
     return dados
+
+
+def parse_float_valor(valor_str: str) -> float:
+    v = valor_str.replace("R$", "").replace(" ", "").replace(",", ".")
+    try:
+        return float(v)
+    except ValueError:
+        return 0.0
 
 
 def main():
@@ -29,20 +38,28 @@ def main():
     frame.pack(fill="both", expand=True)
 
     if "erro" in dados:
-        ttk.Label(frame, text=dados["erro"]).pack()
+        ttk.Label(frame, text=dados["erro"], foreground="red").pack()
         root.mainloop()
         return
 
-    quantidade = int(dados.get("Quantidade de matéria prima", dados.get("Quantidade de mat�ria prima", "0")))
-    preco_unit_custo = float(dados.get("Valor unitário da matéria prima", dados.get("Valor unit�rio da mat�ria prima", "0")).replace(",", "."))
-    # Markup simples de 30% para venda
-    preco_unit_venda = preco_unit_custo * 1.30
-    receita_total = preco_unit_venda * quantidade
-    custo_total = preco_unit_custo * quantidade
+    quantidade = int(dados.get("Quantidade de matéria prima", dados.get("Quantidade de mat�ria prima", "0")) or "0")
+    preco_custo_unit = parse_float_valor(dados.get("Valor unitário", "0"))
+
+    preco_venda_unit = preco_custo_unit * 1.30
+    receita_total = preco_venda_unit * quantidade
+    custo_total = preco_custo_unit * quantidade
     lucro = receita_total - custo_total
 
     ttk.Label(frame, text="Simulação de Venda / Faturamento", font=("Arial", 14, "bold")).pack(pady=(0, 10))
 
-    ttk.Label(frame, text=f"Quantidade disponível para venda: {quantidade}").pack(anchor="w")
-    ttk.Label(frame, text=f"Preço de custo (unitário): R$ {preco_unit_custo:.2f}").pack(anchor="w")
-    ttk
+    ttk.Label(frame, text=f"Quantidade disponível para venda: {quantidade} unidades").pack(anchor="w")
+    ttk.Label(frame, text=f"Preço de custo (unitário): R$ {preco_custo_unit:.2f}").pack(anchor="w")
+    ttk.Label(frame, text=f"Preço de venda (unitário, +30%): R$ {preco_venda_unit:.2f}").pack(anchor="w")
+    ttk.Label(frame, text=f"Receita potencial total: R$ {receita_total:.2f}").pack(anchor="w")
+    ttk.Label(frame, text=f"Lucro bruto potencial: R$ {lucro:.2f}").pack(anchor="w")
+
+    root.mainloop()
+
+
+if __name__ == "__main__":
+    main()

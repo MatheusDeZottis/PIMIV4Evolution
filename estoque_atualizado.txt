@@ -1,0 +1,15 @@
+--- ENTRADA DE MERCADORIA 10 ---
+Número de entrada: 10
+Número da nota fiscal: 1250
+Nome do fornecedor: Matheus, Jeferson
+CNPJ do fornecedor: 10050001-25
+Nome da matéria prima: Dorflex
+Quantidade de matéria prima: 10
+Valor unitário: R$32.00
+Valor total da nota fiscal: R$320.00
+Quantidade de parcelas: 3
+
+--- DETALHES DAS PARCELAS ---
+PARCELA 1: Vencimento 24/11/2025 | Valor R$106.67
+PARCELA 2: Vencimento 24/12/2025 | Valor R$106.67
+PARCELA 3: Vencimento 20/01/2026 | Valor R$106.67

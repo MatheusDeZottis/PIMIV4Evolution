@@ -23,7 +23,7 @@ def main():
     dados = carregar_dados()
 
     root = tk.Tk()
-    root.title("Módulo Produção")
+    root.title("Módulo Financeiro")
 
     frame = ttk.Frame(root, padding=10)
     frame.pack(fill="both", expand=True)
@@ -33,21 +33,20 @@ def main():
         root.mainloop()
         return
 
-    materia = dados.get("Nome da matéria prima", dados.get("Nome da mat�ria prima", ""))
-    quantidade = dados.get("Quantidade de matéria prima", dados.get("Quantidade de mat�ria prima", "0"))
-    preco_unit = float(dados.get("Valor unitário da matéria prima", dados.get("Valor unit�rio da mat�ria prima", "0")).replace(",", "."))
     valor_total = float(dados.get("Valor total da nota fiscal", "0").replace(",", "."))
+    qtd_parcelas = int(dados.get("Quantidade de parcelas", "1"))
+    valor_parcela = valor_total / qtd_parcelas if qtd_parcelas > 0 else 0
 
-    ttk.Label(frame, text="Controle de Produção", font=("Arial", 14, "bold")).pack(pady=(0, 10))
+    ttk.Label(frame, text="Resumo Financeiro", font=("Arial", 14, "bold")).pack(pady=(0, 10))
 
-    ttk.Label(frame, text=f"Matéria-prima: {materia}").pack(anchor="w")
-    ttk.Label(frame, text=f"Quantidade em estoque: {quantidade}").pack(anchor="w")
-    ttk.Label(frame, text=f"Preço unitário comprado: R$ {preco_unit:.2f}").pack(anchor="w")
-    ttk.Label(frame, text=f"Custo total do lote: R$ {valor_total:.2f}").pack(anchor="w")
+    ttk.Label(frame, text=f"Valor total da nota fiscal: R$ {valor_total:.2f}").pack(anchor="w")
+    ttk.Label(frame, text=f"Quantidade de parcelas: {qtd_parcelas}").pack(anchor="w")
+    ttk.Label(frame, text=f"Valor de cada parcela: R$ {valor_parcela:.2f}").pack(anchor="w")
 
     ttk.Separator(frame, orient="horizontal").pack(fill="x", pady=10)
 
     ttk.Label(frame, text="Dados brutos do arquivo:", font=("Arial", 10, "bold")).pack(anchor="w")
+
     for chave, valor in dados.items():
         if chave == "erro":
             continue

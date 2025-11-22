@@ -3,7 +3,7 @@
 #include <time.h>
 
 int numeroentrada; //N�mero de entrada de mercadoria em estoque
-char numeronotafiscal[50]; //N�mero da nota fiscal  <<< AJUSTADO PARA STRING
+char numeronotafiscal[50]; //N�mero da nota fiscal  
 char materiaprima[50]; //Nome da mat�ria prima
 int quantidademp; //Quantidade de mat�ria prima
 float precounitario; //Pre�o unit�rio da mat�ria prima

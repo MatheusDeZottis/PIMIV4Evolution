@@ -1,0 +1,15 @@
+--- ENTRADA DE MERCADORIA 1 ---
+Número de entrada: 1
+Número da nota fiscal: 258/8
+Nome do fornecedor: teste
+CNPJ do fornecedor: 0000000000
+Nome da matéria prima: teste
+Quantidade de matéria prima: 25
+Valor unitário: R$800,00
+Valor total da nota fiscal: R$20000,00
+Quantidade de parcelas: 3
+
+--- DETALHES DAS PARCELAS ---
+PARCELA 1: Vencimento 22/12/2025 | Valor R$6666,67
+PARCELA 2: Vencimento 22/01/2025 | Valor R$6666,67
+PARCELA 3: Vencimento 22/02/2025 | Valor R$6666,67

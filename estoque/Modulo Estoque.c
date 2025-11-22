@@ -2,39 +2,47 @@
 #include <locale.h>
 #include <time.h>
 
-int numeroentrada; //Número de entrada de mercadoria em estoque
-char numeronotafiscal; //Número da nota fiscal
-char materiaprima[50]; //Nome da matéria prima
-int quantidademp; //Quantidade de matéria prima
-float precounitario; //Preço unitário da matéria prima
+int numeroentrada; //Nï¿½mero de entrada de mercadoria em estoque
+char numeronotafiscal[50]; //Nï¿½mero da nota fiscal  
+char materiaprima[50]; //Nome da matï¿½ria prima
+int quantidademp; //Quantidade de matï¿½ria prima
+float precounitario; //Preï¿½o unitï¿½rio da matï¿½ria prima
 float valortotalnf; //Valor total da nota fiscal
 int quantidadeparcela; //Quantidade de parcelas para pagamento
 struct tm vencimentoparcela; //Data de vencimento da parcela
-int cnpjfornecedor; //CNPJ do fornecedor
+long long cnpjfornecedor;
 char nomefornecedor[100]; //Nome do fornecedor
 
 int main()
 {
     setlocale(LC_ALL, "portuguese");
 
- //Coleta de dados da entrada de mercadoria
+    //Coleta de dados da entrada de mercadoria
 
-    printf ("Digite o número de entrada de mercadoria: ");
+    printf ("Digite o nï¿½mero de entrada de mercadoria: ");
     scanf ("%d", &numeroentrada);
-    printf ("Digite o número da nota fiscal: ");
-    scanf ("%s", &numeronotafiscal);
+
+    printf ("Digite o nï¿½mero da nota fiscal: ");
+    scanf ("%49s", numeronotafiscal); // <<< AJUSTE: LENDO STRING CORRETA
+
     printf ("Digite o nome do fornecedor: ");
-    scanf ("%s", nomefornecedor);
+    scanf ("%99s", nomefornecedor);
+
     printf ("Digite o CNPJ do fornecedor: ");
-    scanf ("%d", &cnpjfornecedor);
-    printf ("Digite o nome da matéria prima: ");
-    scanf ("%s", materiaprima);
-    printf ("Digite a quantidade de matéria prima: ");
+    scanf ("%lld", &cnpjfornecedor); // <<< AJUSTE: LENDO COMO long long
+
+    printf ("Digite o nome da matï¿½ria prima: ");
+    scanf ("%49s", materiaprima);
+
+    printf ("Digite a quantidade de matï¿½ria prima: ");
     scanf ("%d", &quantidademp);
+
     printf ("Qual valor unitario de cada produto? ");
     scanf ("%f", &precounitario);
+
     valortotalnf = quantidademp * precounitario;
-    printf ("O valor total da nota fiscal é: %.2f\n", valortotalnf);
+    printf ("O valor total da nota fiscal ï¿½: %.2f\n", valortotalnf);
+
     printf ("Em quantos pagamentos essa compra foi parcelada? ");
     scanf ("%d", &quantidadeparcela);
     for (int i = 1; i <= quantidadeparcela; i++)
@@ -42,23 +50,24 @@ int main()
         printf ("Digite a data de vencimento da parcela %d: ", i);
         scanf ("%d/%d/%d", &vencimentoparcela.tm_mday, &vencimentoparcela.tm_mon, &vencimentoparcela.tm_year);
         float valorparcela = valortotalnf / quantidadeparcela;
-        
-     //Exibição das datas de vencimento e valores das parcelas
-
-        printf ("A parcela %d vence em %02d/%02d/%04d e o valor é: %.2f\n", i, vencimentoparcela.tm_mday, vencimentoparcela.tm_mon, vencimentoparcela.tm_year, valorparcela);
+        printf ("A parcela %d vence em %02d/%02d/%04d e o valor ï¿½: %.2f\n",
+                i,
+                vencimentoparcela.tm_mday,
+                vencimentoparcela.tm_mon,
+                vencimentoparcela.tm_year,
+                valorparcela);
     }
 
-    //Gerando arquivo com estoque atualizado
     FILE *arquivo = fopen ("estoque_atualizado.txt", "w");
     if (arquivo != NULL) //Verifica se o arquivo foi aberto corretamente
     {
-        fprintf (arquivo, "Número de entrada de mercadoria: %d\n", numeroentrada);
-        fprintf (arquivo, "Número da nota fiscal: %s\n", numeronotafiscal);
+        fprintf (arquivo, "Nï¿½mero de entrada de mercadoria: %d\n", numeroentrada);
+        fprintf (arquivo, "Nï¿½mero da nota fiscal: %s\n", numeronotafiscal);
         fprintf (arquivo, "Nome do fornecedor: %s\n", nomefornecedor);
-        fprintf (arquivo, "CNPJ do fornecedor: %d\n", cnpjfornecedor);
-        fprintf (arquivo, "Nome da matéria prima: %s\n", materiaprima);
-        fprintf (arquivo, "Quantidade de matéria prima: %d\n", quantidademp);
-        fprintf (arquivo, "Valor unitário da matéria prima: %.2f\n", precounitario);
+        fprintf (arquivo, "CNPJ do fornecedor: %lld\n", cnpjfornecedor);
+        fprintf (arquivo, "Nome da matï¿½ria prima: %s\n", materiaprima);
+        fprintf (arquivo, "Quantidade de matï¿½ria prima: %d\n", quantidademp);
+        fprintf (arquivo, "Valor unitï¿½rio da matï¿½ria prima: %.2f\n", precounitario);
         fprintf (arquivo, "Valor total da nota fiscal: %.2f\n", valortotalnf);
         fprintf (arquivo, "Quantidade de parcelas: %d\n", quantidadeparcela);
         fclose (arquivo);
@@ -68,6 +77,6 @@ int main()
     {
         printf ("Erro ao abrir o arquivo de estoque atualizado!\n");
     }
- 
- return 0;
-} 
+
+    return 0;
+}

@@ -1,0 +1,9 @@
+N�mero de entrada de mercadoria: 2002
+N�mero da nota fiscal: 125521
+Nome do fornecedor: matheus
+CNPJ do fornecedor: 202202201125
+Nome da mat�ria prima: remedio
+Quantidade de mat�ria prima: 200
+Valor unit�rio da mat�ria prima: 0.00
+Valor total da nota fiscal: 0.00
+Quantidade de parcelas: 0
